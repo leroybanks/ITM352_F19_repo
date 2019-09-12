@@ -1,0 +1,39 @@
+body {
+    background-image: url(/Lab2/SmartPhoneProduct1/Images/phone_globe.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    width: 800px;
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+p {
+    text-align: center;
+    color: blue 
+
+}
+
+h1,h2 {
+    text-align: center;
+    color: green
+}
+
+img {
+    display: block;
+    border: 5px solid black;
+    border-radius: 10 px;
+    margin-left: auto;
+    height: 200px;
+    width: 200px;
+}
+
+div {
+    display: flex;
+}
