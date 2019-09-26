@@ -1,0 +1,45 @@
+<table border="1">
+    <tr><th>Line</th><th>Name</th></tr>
+
+    <script>
+
+        rownumber = 1;
+        body = "&lt;first_name&gt;";
+        template = `<tr><td>${rownumber}. </td><td>${body}</td></tr>`;
+        document.write(template);
+
+        rownumber++;
+        body = "<br /> &lt;first_name&gt;";
+        template = `<tr><td>${rownumber}. </td><td>${body}</td></tr>`;
+        document.write(template);
+
+        rownumber++;
+        body = "\\n&lt;first_name&gt;";
+        template = `<tr><td>${rownumber}. </td><td>${body}</td></tr>`;
+        document.write(template);
+
+        rownumber++;
+        body = "`\\n&lt;irst_name&gt;`";
+        template = `<tr><td>${rownumber}. </td><td>${body}</td></tr>`;
+        document.write(template);
+
+        rownumber++;
+        body = "\"\\n&lt;irst_name&gt;\"";
+        template = `<tr><td>${rownumber}. </td><td>${body}</td></tr>`;
+        document.write(template);
+
+
+/*
+    <tr><td>1.</td><td>&lt;first_name&gt;</td></tr>
+    <tr><td>2.</td><td><br />
+                        &lt;first_name&gt;</td></tr>
+    <tr><td>3.</td><td>\n&lt;first_name&gt;</td></tr>
+    <tr><td>4.</td><td>'\n&lt;irst_name&gt;'</td></tr>
+    <tr><td>5.</td><td>"\n&lt;first_name&gt;"</td></tr>
+*/
+
+    </script>
+
+
+
+    </table>
