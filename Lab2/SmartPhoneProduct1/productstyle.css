@@ -14,6 +14,10 @@ main {
     justify-content: space-around;
 }
 
+div {
+    display: flex;
+}
+
 p {
     text-align: center;
     color: blue 
@@ -32,8 +36,4 @@ img {
     margin-left: auto;
     height: 200px;
     width: 200px;
-}
-
-div {
-    display: flex;
 }

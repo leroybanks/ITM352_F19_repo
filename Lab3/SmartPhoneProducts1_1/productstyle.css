@@ -36,7 +36,7 @@ img {
 
 div {
     display: flex;
-    
+
 }.rotate img
 {
   animation: rotation .3s infinite linear;
