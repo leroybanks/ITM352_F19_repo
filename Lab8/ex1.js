@@ -1,7 +1,7 @@
 var age =22;
-var counter = 1;
+var counter = 0;
 // repeat until counter equals age 
-while(counter != age ) {
+while(counter++ != age ) {
     console.log('counter: ' + counter);
-    counter++;
+    
 }
