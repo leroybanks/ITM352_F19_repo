@@ -7,19 +7,19 @@ var item1 = 'Gillette Sensor 3 Razor';
      var price1 = 1.23;
 
 var item2 = 'Barbasol Shaving Cream';
-     var quantity1 = 1;
+     var quantity2 = 1;
      var price2 = 2.64;
 
 var item3= 'Nautica Cologne';
-     var quantity1 = 1;
+     var quantity3 = 1;
      var price3 = 6.17;
 
 var item4 = 'Rubbing Alcohol';
-     var quantity1 = 3;
+     var quantity4 = 3;
      var price4 = 12;
 
 var item5 = 'Colegate Classic Toothbrush';
-     var quantity1 = 20;
+     var quantity5 = 20;
      var price5 = 10;
 
 // Compute extended prices
@@ -30,7 +30,7 @@ var extended_price4 = price4 * quantity4;
 var extended_price5 = price5 * quantity5;
 
 // Compute sub-total
-var $subtotal = $extended_price1 + $extended_price2 + $extended_price3 + $extended_price4 + $extended_price5;
+var subtotal = extended_price1 + extended_price2 + extended_price3 + extended_price4 + extended_price5;
 
 var taxrate = 0.0575;
 var taxpercent = "5.75" + "%";
@@ -70,50 +70,49 @@ document.write(
             "</th>" +
             "</tr>" +
             "<tr>"  +
-                "<td width='43%'>" " + item1 + "</td>" +
+                "<td width='43%'>" + item1 + "</td>" +
                 "<td align='center' width='43%'>" + quantity1 + "</td>" +
                 "<td width='43%'>" + price1 + "</td>" +
                 "<td width='43%'>" + extended_price1 + "</td>" +
             "</tr>" +
             "<tr>" +
-                "<td width=\"43%\">" + item2 + "</td>" +
-                "<td align=\"center\" width=\"11%\">" + quantity2 + "</td>" +
-                "<td width=\"13%\">" + price2 + "</td>" +
-                "<td width=\"54%\">" + extended_price2 + "</td>" +
+            "<td width='43%'>" + item1 + "</td>" +
+                "<td align='center' width='43%'>" + quantity1 + "</td>" +
+                "<td width='43%'>" + price1 + "</td>" +
+                "<td width='43%'>" + extended_price1 + "</td>" +
             "</tr>" + 
         "<tr>" +
-                "<td width=\"43%\">" + item3 + "</td>" +
-                "<td align=\"center\" width=\"11%\">" + quantity3 + "</td>" +
-                "<td width=\"13%\">" + price3 + "</td>" +
-                "<td width=\"54%\">" + extended_price3 + "</td>" +
+        "<td width='43%'>" + item1 + "</td>" +
+                "<td align='center' width='43%'>" + quantity1 + "</td>" +
+                "<td width='43%'>" + price1 + "</td>" +
+                "<td width='43%'>" + extended_price1 + "</td>" +
             "</tr>" +  
         "<tr>" +
-                "<td width=\"43%\">" + item4 + "</td>" +
-                "<td align=\"center\" width=\"11%\">" + quantity4 + "</td>" +
-                "<td width=\"13%\">" + price4 + "</td>" +
-                "<td width=\"54%\">" + extended_price4 + "</td>" +
+        "<td width='43%'>" + item1 + "</td>" +
+                "<td align='center' width='43%'>" + quantity1 + "</td>" +
+                "<td width='43%'>" + price1 + "</td>" +
+                "<td width='43%'>" + extended_price1 + "</td>" +
             "</tr>" +   
         "<tr>" +
-                "<td width=\"43%\">" + item5 + "</td>" +
-                "<td align=\"center\" width=\"11%\">" + quantity5 + "</td>" +
-                "<td width=\"13%\">" + price5 + "</td>" +
-                "<td width=\"54%\">" + extended_price5 + "</td>" +
-            "</tr>" + 
+        "<td width='43%'>" + item1 + "</td>" +
+                "<td align='center' width='43%'>" + quantity1 + "</td>" +
+                "<td width='43%'>" + price1 + "</td>" +
+                "<td width='43%'>" + extended_price1 + "</td>" +
             "</tr>" +  
         "<tr>" +
-                "<td colspan=\"4\" width=\"100%\">" + "&nbsp;" + "</td>" +
+                "<td colspan='4' width='100%' + "&nbsp;" + "</td>" +
             "</tr>" +
               "<tr>" +
-                "<td style=\"text-align: center;\" colspan=\"3\" width=\"67%\">" + "Sub-total" + "</td>" +
-               "<td width=\"54%\">" + subtotal + "</td>" +
+                "<td style= "text-align: center;" + colspan='3' width='67%''>" + "Sub-total" + "</td>" +
+               "<td width= "54%\">" + subtotal + "</td>" +
             "</tr>" +
             "<tr>" +
-              "<td style=\"text-align: center;\" colspan=\"3\" width=\"67%\">" + "<span style=\"font-family: arial;\">" + "Tax @" + taxpercent + "</span>" + "</td>" +
-              "<td width=\"54%\">" + salestax + "</td>" +
+              "<td style= "text-align: center;\" colspan='3' width='67%'>"</tr> + "<span style="font-family: arial;\">" + "Tax @" + taxpercent + "</span>" + "</td>" +
+              "<td width='54%'>" + salestax + "</td>" +
             "</tr>"
             "<tr>"
-              "<td style=\"text-align: center;\" colspan=\"3\" width=\"67%\">" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
-              "<td width=\"54%\">" + "<strong>" + grandtotal + "</strong>" + "</td>" +
+              "<td style="text-align: center;" colspan='3' "width=67%" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
+              "<td width='54%'> + "<strong>" grandtotal + "</strong>" + "</td>" +
             "</tr>"
         "</tbody>"
     "</table>"
