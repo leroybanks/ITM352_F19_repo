@@ -60,7 +60,7 @@ document.write("<br>" + "<br>")
 document.write(
 "<div>" + 
     "<table border ='2'>"
-        "<tbody>" +
+        <tbody> +
             "<tr>" +
                 "<th style='text-align: center' width='43%'>" + "Item" + "</th>" +
                 "<th style='text-align: center' width='11%'>" + "Quantity" + "</th>" +
@@ -100,19 +100,19 @@ document.write(
                 "<td width='43%'>" + extended_price1 + "</td>" +
             "</tr>" +  
         "<tr>" +
-                "<td colspan='4' width='100%' + "&nbsp;" + "</td>" +
+                "<td colspan='4' width='100%' + "&nbsp; + "</td>" +
             "</tr>" +
               "<tr>" +
-                "<td style= 'text-align' + center;" + colspan='3'+ "width=67%" + "Sub-total" + "</td>" +
-               "<td width= "54%\">" + subtotal + "</td>" +
+                "<td style= 'text-align' + center;" + colspan='3' + "width=67%" + "Sub-total" + "</td>" +
+               "<td width= '54%'>" + subtotal + "</td>" +
             "</tr>" +
             "<tr>" +
-              "<td style= 'text-align' + center;" colspan='3' + "width=67%" + "</tr> + "<span style=font-family; arial;" + "Tax @" + taxpercent + "</span>" + "</td>" +
+              "<td style= 'text-align' + center;" + colspan='3' + "width=67%" + "</tr>" + "<span style=font-family; arial;" + "Tax @" + taxpercent + "</span>" + "</td>" +
               "<td width='54%'>" + salestax + "</td>" +
             "</tr>"
             "<tr>"
-              "<td style='text-align' + center;" colspan='3' + "width=67%" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
-              "<td width='54%'> + "<strong>" grandtotal + "</strong>" + "</td>" +
+              "<td style= 'text-align' + center;" + colspan='3' + "width=67%" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
+              "<td width='54%'>" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
             "</tr>"
         "</tbody>"
     "</table>"
