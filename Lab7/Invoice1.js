@@ -1,6 +1,6 @@
-<script>
+'<script>'
 
-<body>
+'<body>'
 
 var item1 = 'Gillette Sensor 3 Razor';
      var quantity1 = 2;
@@ -103,21 +103,21 @@ document.write(
                 "<td colspan='4' width='100%' + "&nbsp;" + "</td>" +
             "</tr>" +
               "<tr>" +
-                "<td style= "text-align: center;" + colspan='3' width='67%''>" + "Sub-total" + "</td>" +
+                "<td style= 'text-align' + center;" + colspan='3'+ "width=67%" + "Sub-total" + "</td>" +
                "<td width= "54%\">" + subtotal + "</td>" +
             "</tr>" +
             "<tr>" +
-              "<td style= "text-align: center;\" colspan='3' width='67%'>"</tr> + "<span style="font-family: arial;\">" + "Tax @" + taxpercent + "</span>" + "</td>" +
+              "<td style= 'text-align' + center;" colspan='3' + "width=67%" + "</tr> + "<span style=font-family; arial;" + "Tax @" + taxpercent + "</span>" + "</td>" +
               "<td width='54%'>" + salestax + "</td>" +
             "</tr>"
             "<tr>"
-              "<td style="text-align: center;" colspan='3' "width=67%" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
+              "<td style='text-align' + center;" colspan='3' + "width=67%" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
               "<td width='54%'> + "<strong>" grandtotal + "</strong>" + "</td>" +
             "</tr>"
         "</tbody>"
     "</table>"
-"</div>);
+"</div>";
 
-</body>
+'</body>'
 
-</script>
+'</script>'
