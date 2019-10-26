@@ -14,12 +14,10 @@ function isNonNegInt(q, returnErrors = false)
     if(q < 0) errors.push('Negative value!'); // Check if it is non-negative
     if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
 
-    if (sendArrayBack)
-    {
+    if (sendArrayBack) {
         return (errors);
-    } else
-    {
-    return(errors.length == 0);
+    } else {
+        return(errors.length == 0);
     }
 console.log(isNonNegInt("-3"));
 }

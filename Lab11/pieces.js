@@ -15,14 +15,14 @@ function isNonNegInt(q)
     if(parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
 
     return(errors.length == 0);
-}
+
 
 console.log(isNonNegInt("9"));
 
 attributes = "Leroy; 22;22.5>;-22.5";
 separator = ";";
 pieces = attribues.split(separator);
-
+}
 for  (i=0; i<pieces.length; i++)
 {
      console.log(`${typeof(pieces[i])} $(pieces[i]} ${isNotNegInt(pieces[i])}`);
