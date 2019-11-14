@@ -139,24 +139,16 @@ document.write(
               "<td width='54%'>" + "<strong>" + "Grand Total" + "</strong>" + "</td>" +
             "</tr>" +
         '</tbody>' +
-    "table>" +
+    "</table>" +
 "</div>");
 </script>
-
-"<table> border=1;"
-
-<script>
+</body>
+</html>
 
 var outString = "<tr><th>Product#</th><th>Quantity</th></tr>";
 
-for (i=0; i < product_quantities.length; i++)
-{
+for (i=0; i < product_quantities.length; i++) {
     prodNum = i + 1;
     outString += `<tr><td>${prodNum}</td><td>${product_quanitites[i]}
 }
 document.write(outString);
-</table>
-
-</script>
-</body>
-</html>
