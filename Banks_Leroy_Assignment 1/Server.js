@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var myParser = require("body-parser");
 var fs = require('fs');
-var data = require('./public/product_data.js');
+var data = require('./product_data.js');
 var products = data.products;
 
 
