@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,10 +23,10 @@
         let errs = isNonNegInt(theTextbox.value, true);
         if (errs.length > 0)
             document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
-            else
-        document.getElementById(theTextbox.name + '_label').innerHTML = "";
+        else
+            document.getElementById(theTextbox.name + '_label').innerHTML = "";
     }
-    
+
     window.onload = function () {
         let params = (new URL(document.location)).searchParams; // get the query string which has the form data
         // form was submitted so check that quantities are valid then redirect to invoice if ok.
