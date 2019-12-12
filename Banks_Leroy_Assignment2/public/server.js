@@ -1,185 +1,180 @@
-//server acts as a middle man
-const querystring = require('querystring');
-var fs = require('fs'); //getting the component fs and loading it in and saving it in the module fs, because when you do a require it creates a module
-var express = require('express');
-var myParser = require("body-parser");
-var products = require("./public/products.js");
-var qstr;
-console.log(products);
-var app = express();
-var filename = 'user_data.json';
+var fs = require('fs'); //require file system from node
+var express = require('express');//use the express module from node.js
+var app = express(); // create an object of the express module
+var myParser = require('body-parser'); // gets the parser from node
+var data = require('./public/products.js'); //include the data from products.js
+var products = data.products; // Products is defined as the data from product_data.js
+var qs = require('querystring'); 
 
-// Only open the file if it exist
-if (fs.existsSync(filename)) {
-   stats = fs.statSync(filename);
-   console.log(filename + ' has ' + stats.size + ' characters ');
 
-   data = fs.readFileSync(filename, 'utf-8');
-
-   var users_reg_data = JSON.parse(data);
-   /*
-       username = 'newuser';
-       users_reg_data[username] = {};
-       users_reg_data[username].password = 'newpass';
-       users_reg_data[username].email = 'newuser@user.com';
-       fs.writeFileSync(filename, JSON.stringify(users_reg_data)); //adding a new file
-       */
-
-   console.log(users_reg_data);
-} else {
-   console.log(filename + ' does not exist! ');
-}
-//we want to see if our client is getting our requests
-app.all('*', function (request, response, next) {
-   console.log(request.method + ' to ' + request.path);
-   next();
-});
-//if your getting any post requests, takes data in the body and puts it in the body object 
 app.use(myParser.urlencoded({ extended: true }));
-//intercept purchase submission form, if good give an invoice, otherwise send back to order page
-//when server gets a get request send to the path process_page
-app.get("/process_page", function (request, response) {
-   //check if quantity data is valid
-   //look up request.query
-   params = request.query;
-   console.log(params);
-   if (typeof params['purchase_submit'] != 'undefined') {
-      has_errors = false; // assume quantities are valid from the start
-      total_qty = 0; // need to check if something was selected so we will look if the total > 0
-      for (i = 0; i < products.length; i++)
-         if (typeof params[`quantity${i}`] != 'undefined') {
-            a_qty = parseInt(params[`quantity${i}`]);
-            if (!a_qty) {
-               a_qty = 0;
+
+var purchase_data; // make a global variable to holf the product selections until we get to invoice 
+
+
+// Function to test if a string is a non-negative integer
+function isNonNegInt(q, returnErrors = false) {
+    errors = []; // assume no errors at first
+    if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
+    if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
+    if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
+    return returnErrors ? errors : (errors.length == 0);
+
+}
+
+// Borrowed from Lab13 
+app.all('*', function (request, response, next) {
+    console.log(request.method + ' to ' + request.path);
+    next();
+});
+
+//Borrowed and adapted from the assignment examples
+app.get('/purchase', function (req, res, next) {
+    purchase_data = req.query; // save for later
+    if (typeof req.query['purchase_submit'] != 'undefined') {
+        console.log(Date.now() + ': Purchase made from ip ' + req.ip + ' data: ' + JSON.stringify(req.query));
+
+        purchase_data = req.query; // get the query string data which has the form data
+        // form was submitted so check that quantities are valid then redirect to invoice if ok.
+
+        ExistErrors = false; // clean slate with the assumption everything is right
+        total_quantity = 0; // need to check if something was selected so we will look if the total > 0
+        for (i = 0; i < products.length; i++) {
+            if (purchase_data[`quantity${i}`] != 'undefined') { //If all quantities are not undefined
+                arrayquantity = purchase_data[`quantity${i}`]; //variable array quantity stores all the quantities 
+                total_quantity += arrayquantity; //Add the total quantity
+                if (!isNonNegInt(arrayquantity)) { //check if any quantities are valid
+                    ExistErrors = true; // change the clean slate to errors existing
+                }
             }
-            total_qty += a_qty;
-            if (!isNonNegInt(a_qty)) {
-               has_errors = true; // oops, invalid quantity
-            }
-         }
-   }
-   console.log(has_errors, total_qty);
-   qstr = querystring.stringify(request.query);
-   // Now respond to errors or redirect to invoice if all is ok
-   if (has_errors || total_qty === 0) {
-      //if quantity data is not valid, send them back to product display
-      qstr = querystring.stringify(request.query);
+        }
+        // Now respond to errors or redirect to login if all is ok
+        if (ExistErrors || total_quantity == 0) {
+            res.redirect('Products.display.html?' + qs.stringify(purchase_data));
+        } else { // all good to go!
+            res.redirect('./login.html');
+        }
 
-      //store the quanity query string on the server by making it a global vadiable
-      //redirect to the login/registration page 
-      //store the login/registration information on the server with a post method?
-      //then redirect to the invoice with the quantity from the server
-      //then say thank you username for your purchase on the invoice page 
+    }
+});
+
+// Assignment 2
+var filename = "user_data.json"; // Set variable filename to reference user_data.json
 
 
-      response.redirect("Products_display.html?" + qstr);
-
-   } else { // all good to go!
-      //redirect to the login/registration page 
-      response.redirect("login.html?" + qstr);
-   }
+if (fs.existsSync(filename)) { //Only open the file if it exists 
+    var raw_data = fs.readFileSync(filename, 'utf-8');
+    var users_reg_data = JSON.parse(raw_data);
+    console.log(users_reg_data);
+    fstats = fs.statSync(filename);
+    console.log(filename + "has " + fstats.size + " character");
+}
+else {
+    console.log( filename + 'doesnt exist!');
+}
+app.post("/login", function (request, response) {
+    loginData = request.body;
+    //console.log(loginData);
+    // Process login form POST and redirect to logged in page if ok, back to login page if not
+    the_username = loginData.username;
+    the_password = loginData.password;
+    //console.log(the_username)
+    //console.log(the_password)
+    if (typeof users_reg_data[the_username] != 'undefined') { //check if the username exists in the json data
+        if (users_reg_data[the_username].password == the_password)
+            response.redirect('/invoice.html?' + qs.stringify(purchase_data)); //Everything is awesome and send them to invoice along with the purchase data
+    } else {
+        response.redirect('./login.html'); //There is a valid error, redirect back to page
+    }
 }
 );
-//if quantity data valid, send them to the invoice
-app.post("/process_registration", function (request, response) {
 
-   new_user = request.body;
+//Added from Lab14
+app.post("/register", function (request, response) {
+    regData = request.body; //registration data is set as variable
+    console.log("Got the registration request"); //CLets admin know grabbing the registration data was a success
+    console.log(request.body); //Lets admin see what was inputted in all the fields
+    // process a simple register form
 
+    validerrors = false;
 
-   // process a simple register form
+    username_input = regData.username.toLowerCase(); //Makes it not case sensitive, I think that's right
+    password_input = regData.password; //Just setting the rest of the variables to make it easier for me to reference
+    REpassword_input = regData.repeat_password;
+    email_input = regData.email;
 
-   // validate registration data 
-   errors = [];
-   // Username:
-   // (a) This should have a minimum of 4 characters and maximum of 10 characters.
-   if (new_user.username.length <= 4 && new_user.username.length >= 10) {
-      errors.push("user name must be between 4-10 characters")
-   }
-   // (b) Only letters and numbers are valid.
-   var letters = RegExp("^[0-9a-z]+$", "i");
-   if (!letters.test(new_user.username)) {
-      errors.push("Must only use alphanumeric numbers")
-   }
-   //(c) Usernames are CASE INSENSITIVE. 
+    //The validation was copied and pasted from my registration.html with a couple adjustments (I worked on the html file first) 
 
-   //(d) They must be unique. There may only be one of any particular username.
-   //Because of this, you will have to find a way to check the new username against the usernames saved in your file.
-   if (typeof users_reg_data[request.body.username] != 'undefined') {
-      errors.push("user name taken");
-   }
-   //Password: (a) This should have a minimum of 6 characters.
-   if (new_user.password.length === 0 || new_user.password.length < 6) {
-      errors.push("Must be at least 6 characters");
-   }
-   //(b) Any characters are valid. //
+    //Validate username <!-- https://www.roseindia.net/javascript/AlphanumericValidationinJavaScript.shtml -->
+    var letters = /^[0-9a-zA-Z]+$/; //Defining only letters and numbers
 
-   //(c) Passwords are CASE SENSITIVE. That is, “ABC” is different from “abc”.
+    if (typeof users_reg_data[username_input] != 'undefined') { //See if there is a username matching the username input. 
+        validerrors = true
+    };
+    if (username_input.length < 1 && username_input.length > -1) { //See if the userame input is empty, same from the registration.html 
+        validerrors = true
+    };
+    if (username_input.length > 0 && username_input.length < 4) { //See if the userame input has more characters than 4, same from the registration.html
+        validerrors = true //prevents shorts passwords
+    };
+    if (username_input.length > 15) { //See if the username input has less characters than 15
+        validerrors = true //prevents too long of a username
+    };
+    if (username_input.match(letters)) { }      //check if username input is only alphanumeric, if true: do nothing --> else: valid error
+    else {                                      //found this .match method recommendation from a forum and adapted from w3 schools
+        validerrors = true
+    };
 
-   //Confirm password: (a) Should make sure that it is the same as the password.
-   if (new_user.password !== new_user.repeat_password) {
-      errors.push("Passwords must match");
-   }
+    //Validate Password
 
+    if (password_input.length < 1 && password_input.length > -1) { //Same as above. Check if empty
+        validerrors = true
+    };
+    if (password_input.length > 0 && password_input.length < 5) { //Similar to above. Check if too short
+        validerrors = true
+    };
 
-   //Email address: (a) The format should be X@Y.Z where 
-   //(b) X is the user address which can only contain letters, numbers, and the characters “_” and “.” 
-   //(c) Y is the host machine which can contain only letters and numbers and “.” characters 
-   //(d) Z is the domain name which is either 2 or 3 letters such as “edu” or “tv”.
-   // (e) Email addresses are CASE INSENSITIVE.
+    //Validate Re-Entered Password
 
-   //Full Name The users full name. Should only allow letters. No more than 30 characters.\
+    if (REpassword_input.length < 1 && REpassword_input.length > -1) { //Same as above. Check if empty
+        validerrors = true
+    };
+    if (password_input != REpassword_input) { //Check whether or not the repeated password input is the same as the first password input
+        validerrors = true
+    };
 
-   // all good so save the new user
-   console.log(qstr)
-   if (errors.length === 0) {
-      users_reg_data[new_user.username] = {
-         name: new_user.name,
-         password: new_user.password,
-         email: new_user.email
-      }
-      console.log(users_reg_data)
-      fs.writeFile(filename, JSON.stringify(users_reg_data, null, 2), (err) => {
-         if(err) {
-            return console.error(err);
-         } else {
-            console.log("User file updated");
-         }
-      })
-      response.redirect("invoice.html?" + qstr);
-   } else {
-      response.redirect('/registration.html?error=' + errors.join(','))
-   }
-});
+    //Validate Email
+    //<!-- https://html5-tutorial.net/form-validation/validating-email/ -->
+    var email_letters = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //Setting a variable so it will be easier for me
 
+    if (email_input.length < 1 && email_input.length > -1) { //Same as above. Check if empty
+        validerrors = true
+    };
 
-app.post("/process_login", function (request, response) {
-   // Process login form POST and redirect to logged in page if ok, back to login page if not
-   console.log(request.body);
-   the_username = request.body.username;
-   if (typeof users_reg_data[the_username] != 'undefined') {//check if the username exists
-      if (users_reg_data[the_username].password === request.body.password) {//check if the password matches
-         response.redirect('invoice.html?' + qstr);
-         return;
-      } else {
-         error = "invalid Password";
+    if (email_input.match(email_letters)) { } //Similar concept as above, this time checking if the pattern matches a valid email
+    else { validerrors = true };
 
-      } 
-   }else {
-      
-      error = "invalid Username";
-   }
-   response.redirect('/login.html?error=' + error);
+    username_input = regData.username; //Username input is defined from the body
 
+    if (validerrors == false) {
+        users_reg_data[username_input] = {}; //Set username input into the JSON file array
+        users_reg_data[username_input].name = username_input; //In the array, make an object the name = username
+        users_reg_data[username_input].password = regData.password; //In the array, make an object the password = password
+        users_reg_data[username_input].email = regData.email; //In the array, make an object the email = email
 
-});
-app.use(express.static('./public'));// any get requests that weren't found above ask the the server for a file go to public and look for folder
+        console.log(username_input) //Helps the admin see what the username is being entered
+
+        var output_data = JSON.stringify(users_reg_data); //set variable output_daa as Stringify the users registration data
+        fs.writeFileSync(filename, JSON.stringify(users_reg_data)); //Write it out in the JSON file, without this: the new data would not be in the JSON
+
+        console.log(output_data) //See if the data was successfully and correctly added
+
+        response.redirect('/invoice.html?' + qs.stringify(purchase_data)); //Everything is awesome and send them to invoice along with the purchase data that is being held
+    }
+    else {
+        response.redirect('./registration.html'); //There is a valid error, redirect back to page
+    }
+
+}); // look for files in the "public" folder and listen on port 8080
+app.use(express.static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
-
-function isNonNegInt(q, returnErrors = false) {
-   errors = []; // assume no errors at first
-   if (q === "") { q = 0; }
-   if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
-   if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
-   if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
-   return returnErrors ? errors : (errors.length === 0);
-}

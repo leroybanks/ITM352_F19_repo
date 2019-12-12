@@ -1,11 +1,12 @@
 //Ex 13
-var express = require('express');
-var app = express();
-var myParser = require("body-parser");
-var fs = require('fs');
-var data = require('./public/products.js');
-var products = data.products;
+var express = require('express'); // use the express module from node
+var app = express(); // create an object of the express module
+var myParser = require("body-parser"); // it gets the parser from node.js
+var fs = require('fs'); // require file system from node
+var data = require('./public/products.js'); // brings the data from products.js
+var products = data.products; // products is defined from products.js
 
+app.use(myParser.urlencoded({ extended: true }));
 
 // Function to test if a string is a non-negative integer
 function isNonNegInt(q, returnErrors = false) {
