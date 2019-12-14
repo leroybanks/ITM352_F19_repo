@@ -136,6 +136,7 @@ app.post("/register", function (request, response) {
     else {
         response.redirect('registration.html');
     }
+});
 //Card Registration Code - Clement Li
 
 app.post("/card_registered", function (request, response) {
@@ -194,4 +195,3 @@ app.listen(8080, () => console.log(`listening on port 8080`));
 
 //https://stackoverflow.com/questions/27812639/display-alert-message-in-browser-using-node-js
 //https://www.webucator.com/tutorial/learn-ajax/intro-ajax-the-nodejs-server.cfm
-});
